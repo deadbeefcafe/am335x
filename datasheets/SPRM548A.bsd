@@ -1,0 +1,1051 @@
+----------------------------------------------------------------------
+--  TI F781962A Fixed & Floating Point DSP with Boundary Scan   --
+----------------------------------------------------------------------
+--  Supported Devices: F781962A Revision 2.0                     --
+----------------------------------------------------------------------
+--  Created by    : Texas Instruments Incorporated                  --
+--  Documentation : F781962A Users Guide                         --
+--  BSDL Revision : 0.1 originally created                          --
+--                                                                  --
+--  BSDL Status   : Preliminary                                     --
+--  Date Created  : 5/03/2013                                      --
+--                                                                  --
+----------------------------------------------------------------------
+--                                                                  --
+--                          IMPORTANT NOTICE
+--  Texas Instruments Incorporated (TI) reserves the right to make
+--  changes to its products or to discontinue any semiconductor
+--  product or service without notice, and advises its customers to
+--  obtain the latest version of the relevant information to
+--  verify, before placing orders, that the information being
+--  relied on is current.
+--  TI warrants performance of its semiconductor products and
+--  related software to the specifications applicable at the time
+--  of sale in accordance with TI's standard warranty. Testing and
+--  other quality control techniques are utilized to the extent TI
+--  deems necessary to support this warranty. Specific testing of
+--  all parameters of each device is not necessarily performed,
+--  except those mandated by government requirements.
+--
+--  Certain applications using semiconductor devices may involve
+--  potential risks of death, personal injury, or severe property
+--  or environmental damage ("Critical Applications").
+--    TI SEMICONDUCTOR PRODUCTS ARE NOT DESIGNED, INTENDED,
+--    AUTHORIZED, OR WARRANTED TO BE SUITABLE FOR USE IN
+--    LIFE-SUPPORT APPLICATIONS, DEVICES OR SYSTEMS OR OTHER
+--    CRITICAL APPLICATIONS.
+--  Inclusion of TI products in such applications is understood
+--  to be fully at the risk of the customer.  Use of TI products
+--  in such applications requires the written approval of an
+--  appropriate TI officer. Questions concerning potential risk
+--  applications should be directed to TI through a local SC sales
+--  office.
+--  In order to minimize risks associated with the customer's
+--  applications, adequate design and operating safeguards should
+--  be provided by the
+--  customer to minimize inherent or procedural hazards.
+
+--  TI assumes no liability for applications assistance, customer
+--  product design, software performance, or infringement of
+--  patents or services described herein.  Nor does TI warrant or
+--  represent that any license, either express or implied, is
+--  granted under any patent right, copyright, mask work right, or
+--  other intellectual property right of TI covering or relating
+--  to any combination, machine, or process in which such
+--  semiconductor products or services might be or are used.
+--            Copyright (c) 2001, Texas Instruments Incorporated
+-------------------------------------------------------------------
+    entity F781962A  is
+
+    generic(PHYSICAL_PIN_MAP : string := "ZCE");
+
+    port(
+    EMU0              : inout bit;
+    EMU1              : inout bit;
+    EXT_WAKEUP        : in    bit;
+    I2C0_SCL          : inout bit;
+    I2C0_SDA          : inout bit;
+    XTALIN           : linkage bit;
+    XTALOUT          : linkage bit;
+    RTC_XTALIN           : linkage bit;
+    RTC_XTALOUT          : linkage bit;
+    PMIC_POWER_EN     : linkage bit;
+    RTC_PWRONRSTn          : in    bit;
+    TCK               : in    bit;
+    TDI               : in    bit;
+    TDO               :   out bit;
+    TMS               : in    bit;
+    USB0_DRVVBUS      : inout bit;
+    ddr_a0            : inout bit;
+    ddr_a1            : inout bit;
+    ddr_a10           : inout bit;
+    ddr_a11           : inout bit;
+    ddr_a12           : inout bit;
+    ddr_a13           : inout bit;
+    ddr_a14           : inout bit;
+    ddr_a15           : inout bit;
+    ddr_a2            : inout bit;
+    ddr_a3            : inout bit;
+    ddr_a4            : inout bit;
+    ddr_a5            : inout bit;
+    ddr_a6            : inout bit;
+    ddr_a7            : inout bit;
+    ddr_a8            : inout bit;
+    ddr_a9            : inout bit;
+    ddr_ba0           : inout bit;
+    ddr_ba1           : inout bit;
+    ddr_ba2           : inout bit;
+    ddr_casn          : inout bit;
+    ddr_ck            : inout bit;
+    ddr_cke           : inout bit;
+    ddr_csn0          : inout bit;
+    ddr_d0            : inout bit;
+    ddr_d1            : inout bit;
+    ddr_d10           : inout bit;
+    ddr_d11           : inout bit;
+    ddr_d12           : inout bit;
+    ddr_d13           : inout bit;
+    ddr_d14           : inout bit;
+    ddr_d15           : inout bit;
+    ddr_d2            : inout bit;
+    ddr_d3            : inout bit;
+    ddr_d4            : inout bit;
+    ddr_d5            : inout bit;
+    ddr_d6            : inout bit;
+    ddr_d7            : inout bit;
+    ddr_d8            : inout bit;
+    ddr_d9            : inout bit;
+    ddr_dqm0          : inout bit;
+    ddr_dqm1          : inout bit;
+    ddr_dqs0          : inout bit;
+    ddr_dqs1          : inout bit;
+    ddr_dqsn0         : inout bit;
+    ddr_dqsn1         : inout bit;
+    DDR_CKn           : inout bit;
+    ddr_odt           : inout bit;
+    ddr_rasn          : inout bit;
+    ddr_resetn        : inout bit;
+    ddr_vtp           : linkage bit;
+    ddr_wen           : inout bit;
+    eCAP0_in_PWM0_out : inout bit;
+    gpmc_ad0          : inout bit;
+    gpmc_ad1          : inout bit;
+    gpmc_ad10         : inout bit;
+    gpmc_ad11         : inout bit;
+    gpmc_ad12         : inout bit;
+    gpmc_ad13         : inout bit;
+    gpmc_ad14         : inout bit;
+    gpmc_ad15         : inout bit;
+    gpmc_ad2          : inout bit;
+    gpmc_ad3          : inout bit;
+    gpmc_ad4          : inout bit;
+    gpmc_ad5          : inout bit;
+    gpmc_ad6          : inout bit;
+    gpmc_ad7          : inout bit;
+    gpmc_ad8          : inout bit;
+    gpmc_ad9          : inout bit;
+    gpmc_advn_ale     : inout bit;
+    gpmc_ben0_cle     : inout bit;
+    gpmc_ben1         : inout bit;
+    gpmc_clk          : inout bit;
+    gpmc_csn0         : inout bit;
+    gpmc_csn1         : inout bit;
+    gpmc_csn2         : inout bit;
+    gpmc_csn3         : inout bit;
+    gpmc_oen_ren      : inout bit;
+    gpmc_wait0        : inout bit;
+    gpmc_wen          : inout bit;
+    gpmc_wpn          : inout bit;
+    lcd_ac_bias_en    : inout bit;
+    lcd_data0         : inout bit;
+    lcd_data1         : inout bit;
+    lcd_data10        : inout bit;
+    lcd_data11        : inout bit;
+    lcd_data12        : inout bit;
+    lcd_data13        : inout bit;
+    lcd_data14        : inout bit;
+    lcd_data15        : inout bit;
+    lcd_data2         : inout bit;
+    lcd_data3         : inout bit;
+    lcd_data4         : inout bit;
+    lcd_data5         : inout bit;
+    lcd_data6         : inout bit;
+    lcd_data7         : inout bit;
+    lcd_data8         : inout bit;
+    lcd_data9         : inout bit;
+    lcd_hsync         : inout bit;
+    lcd_pclk          : inout bit;
+    lcd_vsync         : inout bit;
+    mdc          : inout bit;
+    mdio         : inout bit;
+    mii1_col          : inout bit;
+    mii1_crs          : inout bit;
+    mii1_rx_clk        : inout bit;
+    mii1_rxd0         : inout bit;
+    mii1_rxd1         : inout bit;
+    mii1_rxd2         : inout bit;
+    mii1_rxd3         : inout bit;
+    mii1_rx_dv         : inout bit;
+    mii1_rx_er        : inout bit;
+    mii1_tx_clk        : inout bit;
+    mii1_txd0         : inout bit;
+    mii1_txd1         : inout bit;
+    mii1_txd2         : inout bit;
+    mii1_txd3         : inout bit;
+    mii1_tx_en         : inout bit;
+    mmc0_clk          : inout bit;
+    mmc0_cmd          : inout bit;
+    mmc0_dat0         : inout bit;
+    mmc0_dat1         : inout bit;
+    mmc0_dat2         : inout bit;
+    mmc0_dat3         : inout bit;
+    EXTINTn              : inout bit;
+    WARMRSTn      : inout bit;
+    TRSTn             : in    bit;
+    PWRONRSTn              : in    bit;
+    rmii1_ref_clk      : inout bit;
+    spi0_cs0          : inout bit;
+    spi0_cs1          : inout bit;
+    spi0_d0           : inout bit;
+    spi0_d1           : inout bit;
+    spi0_sclk         : inout bit;
+    testout           : linkage bit;
+    uart0_ctsn        : inout bit;
+    uart0_rtsn        : inout bit;
+    uart0_rxd         : inout bit;
+    uart0_txd         : inout bit;
+    uart1_ctsn        : inout bit;
+    uart1_rtsn        : inout bit;
+    uart1_rxd         : inout bit;
+    uart1_txd         : inout bit;
+    xdma_event_intr0  : inout bit;
+    xdma_event_intr1  : inout bit;
+    AIN0              : linkage bit;
+    AIN1              : linkage bit;
+    AIN2              : linkage bit;
+    AIN3              : linkage bit;
+    AIN4              : linkage bit;
+    AIN5              : linkage bit;
+    AIN6              : linkage bit;
+    AIN7              : linkage bit;
+    USB0_CE           : linkage bit;
+    USB0_DM           : linkage bit;
+    USB0_DP           : linkage bit;
+    USB0_ID           : linkage bit;
+    VREFN             : linkage bit;
+    VREFP             : linkage bit;
+    vssa_usb          : linkage bit;
+    vssa_adc          : linkage bit;
+    vss_osc           : linkage bit;
+    vss               : linkage bit_vector (46 downto 0);
+    vpp               : linkage bit;
+    vddshv6           : linkage bit_vector (5 downto 0);
+    vddshv5           : linkage bit_vector (2 downto 0);
+    vddshv4           : linkage bit_vector (2 downto 0);
+    vddshv1           : linkage bit_vector (4 downto 0);
+    vdds_sram_mpu_bb  : linkage bit;
+    vdds_sram_core_bg : linkage bit;
+    vdds_rtc          : linkage bit;
+    vdds_pll_mpu      : linkage bit;
+    vdds_pll_ddr      : linkage bit;
+    vdds_pll_core_lcd : linkage bit;
+    vdds_osc          : linkage bit;
+    vdds_ddr          : linkage bit_vector (7 downto 0);
+    vdds              : linkage bit_vector (4 downto 0);
+    vdda3p3v_usb0     : linkage bit;
+    vdda1p8v_usb0     : linkage bit;
+    vdda_adc          : linkage bit;
+    vdd_core          : linkage bit_vector (25 downto 0);
+    ENZ_KALDO_1P8V    : linkage bit;
+    ddr_vref          : linkage bit;
+    cap_vdd_sram_mpu  : linkage bit;
+    cap_vdd_sram_core : linkage bit;
+    cap_vdd_rtc       : linkage bit;
+    cap_vbb_mpu       : linkage bit;
+    usb0_vbus         : linkage bit
+);
+    use STD_1149_1_2001.all; -- Get standard attributes and definitions
+    attribute COMPONENT_CONFORMANCE of F781962A : entity is
+    "STD_1149_1_2001";
+    
+    attribute PIN_MAP of F781962A : entity is PHYSICAL_PIN_MAP;
+    constant ZCE : PIN_MAP_STRING :=
+    "EMU0              : A15 ,"& 
+    "EMU1              : D14 ,"& 
+    "EXT_WAKEUP        : B5 ,"& 
+    "I2C0_SCL          : B19 ,"& 
+    "I2C0_SDA          : C18 ,"& 
+    "XTALIN           : W11 ,"& 
+    "XTALOUT          : W12 ,"& 
+    "RTC_XTALIN           : A6 ,"& 
+    "RTC_XTALOUT          : A5 ,"& 
+    "PMIC_POWER_EN     : C7 ,"& 
+    "RTC_PWRONRSTn          : B7 ,"& 
+    "TCK               : B14 ,"& 
+    "TDI               : B13 ,"& 
+    "TDO               : A14 ,"& 
+    "TMS               : C14 ,"& 
+    "USB0_DRVVBUS      : G16 ,"& 
+    "ddr_a0            : F3 ,"& 
+    "ddr_a1            : J2 ,"& 
+    "ddr_a10           : E2 ,"& 
+    "ddr_a11           : G4 ,"& 
+    "ddr_a12           : F4 ,"& 
+    "ddr_a13           : H1 ,"& 
+    "ddr_a14           : H3 ,"& 
+    "ddr_a15           : E3 ,"& 
+    "ddr_a2            : D1 ,"& 
+    "ddr_a3            : B3 ,"& 
+    "ddr_a4            : E5 ,"& 
+    "ddr_a5            : A2 ,"& 
+    "ddr_a6            : B1 ,"& 
+    "ddr_a7            : D2 ,"& 
+    "ddr_a8            : C3 ,"& 
+    "ddr_a9            : B2 ,"& 
+    "ddr_ba0           : A3 ,"& 
+    "ddr_ba1           : E1 ,"& 
+    "ddr_ba2           : B4 ,"& 
+    "ddr_casn          : F1 ,"& 
+    "ddr_ck            : C2 ,"& 
+    "ddr_cke           : G3 ,"& 
+    "ddr_csn0          : H2 ,"& 
+    "ddr_d0            : N4 ,"& 
+    "ddr_d1            : P4 ,"& 
+    "ddr_d10           : M3 ,"& 
+    "ddr_d11           : M4 ,"& 
+    "ddr_d12           : M2 ,"& 
+    "ddr_d13           : M1 ,"& 
+    "ddr_d14           : N2 ,"& 
+    "ddr_d15           : N1 ,"& 
+    "ddr_d2            : P2 ,"& 
+    "ddr_d3            : P1 ,"& 
+    "ddr_d4            : P3 ,"& 
+    "ddr_d5            : T1 ,"& 
+    "ddr_d6            : T2 ,"& 
+    "ddr_d7            : R3 ,"& 
+    "ddr_d8            : K2 ,"& 
+    "ddr_d9            : K1 ,"& 
+    "ddr_dqm0          : N3 ,"& 
+    "ddr_dqm1          : K3 ,"& 
+    "ddr_dqs0          : R1 ,"& 
+    "ddr_dqs1          : L1 ,"& 
+    "ddr_dqsn0         : R2 ,"& 
+    "ddr_dqsn1         : L2 ,"& 
+    "DDR_CKn           : C1 ,"& 
+    "ddr_odt           : G1 ,"& 
+    "ddr_rasn          : F2 ,"& 
+    "ddr_resetn        : G2 ,"& 
+    "ddr_vtp           : J1 ,"& 
+    "ddr_wen           : A4 ,"& 
+    "eCAP0_in_PWM0_out : E18 ,"& 
+    "gpmc_ad0          : W10 ,"& 
+    "gpmc_ad1          : V9 ,"& 
+    "gpmc_ad10         : T12 ,"& 
+    "gpmc_ad11         : U12 ,"& 
+    "gpmc_ad12         : U13 ,"& 
+    "gpmc_ad13         : T13 ,"& 
+    "gpmc_ad14         : W17 ,"& 
+    "gpmc_ad15         : V17 ,"& 
+    "gpmc_ad2          : V12 ,"& 
+    "gpmc_ad3          : W13 ,"& 
+    "gpmc_ad4          : V13 ,"& 
+    "gpmc_ad5          : W14 ,"& 
+    "gpmc_ad6          : U14 ,"& 
+    "gpmc_ad7          : W15 ,"& 
+    "gpmc_ad8          : V15 ,"& 
+    "gpmc_ad9          : W16 ,"& 
+    "gpmc_advn_ale     : V10 ,"& 
+    "gpmc_ben0_cle     : V8 ,"& 
+    "gpmc_ben1         : V18 ,"& 
+    "gpmc_clk          : V16 ,"& 
+    "gpmc_csn0         : W8 ,"& 
+    "gpmc_csn1         : V14 ,"& 
+    "gpmc_csn2         : U15 ,"& 
+    "gpmc_csn3         : U17 ,"& 
+    "gpmc_oen_ren      : W9 ,"& 
+    "gpmc_wait0        : R15 ,"& 
+    "gpmc_wen          : U8 ,"& 
+    "gpmc_wpn          : W18 ,"& 
+    "lcd_ac_bias_en    : W7 ,"& 
+    "lcd_data0         : U1 ,"& 
+    "lcd_data1         : U2 ,"& 
+    "lcd_data10        : U5 ,"& 
+    "lcd_data11        : V5 ,"& 
+    "lcd_data12        : V6 ,"& 
+    "lcd_data13        : U6 ,"& 
+    "lcd_data14        : W6 ,"& 
+    "lcd_data15        : V7 ,"& 
+    "lcd_data2         : V1 ,"& 
+    "lcd_data3         : V2 ,"& 
+    "lcd_data4         : W2 ,"& 
+    "lcd_data5         : W3 ,"& 
+    "lcd_data6         : V3 ,"& 
+    "lcd_data7         : U3 ,"& 
+    "lcd_data8         : V4 ,"& 
+    "lcd_data9         : W4 ,"& 
+    "lcd_hsync         : T7 ,"& 
+    "lcd_pclk          : W5 ,"& 
+    "lcd_vsync         : U7 ,"& 
+    "mdc          : R19 ,"& 
+    "mdio         : P17 ,"& 
+    "mii1_col          : J19 ,"& 
+    "mii1_crs          : J18 ,"& 
+    "mii1_rx_clk        : M19 ,"& 
+    "mii1_rxd0         : P18 ,"& 
+    "mii1_rxd1         : P19 ,"& 
+    "mii1_rxd2         : N16 ,"& 
+    "mii1_rxd3         : N17 ,"& 
+    "mii1_rx_dv         : L19 ,"& 
+    "mii1_rx_er        : K19 ,"& 
+    "mii1_tx_clk        : N19 ,"& 
+    "mii1_txd0         : L18 ,"& 
+    "mii1_txd1         : M18 ,"& 
+    "mii1_txd2         : N18 ,"& 
+    "mii1_txd3         : M17 ,"& 
+    "mii1_tx_en         : K17 ,"& 
+    "mmc0_clk          : G19 ,"& 
+    "mmc0_cmd          : G17 ,"& 
+    "mmc0_dat0         : G18 ,"& 
+    "mmc0_dat1         : H17 ,"& 
+    "mmc0_dat2         : H18 ,"& 
+    "mmc0_dat3         : H19 ,"& 
+    "EXTINTn              : C17 ,"& 
+    "WARMRSTn      : A16 ,"& 
+    "TRSTn             : A13 ,"& 
+    "PWRONRSTn              : E15 ,"& 
+    "rmii1_ref_clk      : K18 ,"& 
+    "spi0_cs0          : A17 ,"& 
+    "spi0_cs1          : B16 ,"& 
+    "spi0_d0           : B18 ,"& 
+    "spi0_d1           : B17 ,"& 
+    "spi0_sclk         : A18 ,"& 
+    "testout           : B6 ,"& 
+    "uart0_ctsn        : F19 ,"& 
+    "uart0_rtsn        : F18 ,"& 
+    "uart0_rxd         : E19 ,"& 
+    "uart0_txd         : F17 ,"& 
+    "uart1_ctsn        : E17 ,"& 
+    "uart1_rtsn        : D19 ,"& 
+    "uart1_rxd         : D18 ,"& 
+    "uart1_txd         : C19 ,"& 
+    "xdma_event_intr0  : C15 ,"& 
+    "xdma_event_intr1  : B15 ,"& 
+    "AIN0              : B8 ,"& 
+    "AIN1              : A11 ,"& 
+    "AIN2              : A8 ,"& 
+    "AIN3              : B11 ,"& 
+    "AIN4              : C8 ,"& 
+    "AIN5              : B12 ,"& 
+    "AIN6              : A10 ,"& 
+    "AIN7              : A12 ,"& 
+    "USB0_CE           : T18 ,"& 
+    "USB0_DM           : U18 ,"& 
+    "USB0_DP           : U19 ,"& 
+    "USB0_ID           : V19 ,"& 
+    "VREFN             : B9 ,"& 
+    "VREFP             : A9 ,"&
+    "vssa_usb          : P16 ,"&
+    "vssa_adc          : D8 ,"&
+    "vss_osc           : V11 ,"&
+    "vss               : (A1, A19, D10, E10, E7, E8, E9, F12, F13, F6, F7, F8, G12, G8, H10, H11, H9, J11, J14, J15, J5, J6, J9, K11, K12, K8, K9, L11, L14, L15, L5, L6, L9, M10, M11, M9, N12, N8, P12, P13, P14, P7, P8, R10, T10, W1, W19 ),"&
+    "vpp               : R5 ,"&
+    "vddshv6           : (E11, E12, E13, F14, P6, R7 ),"&
+    "vddshv5           : (M14 ,M15 ,N15 ),"&
+    "vddshv4           : (G15 ,H14 ,H15 ),"&
+    "vddshv1           : (R11, R12, R13, R8, R9 ),"&
+    "vdds_sram_mpu_bb  : C12 ,"&
+    "vdds_sram_core_bg : C10 ,"&
+    "vdds_rtc          : C6 ,"&
+    "vdds_pll_mpu      : H16 ,"&
+    "vdds_pll_ddr      : C5 ,"&
+    "vdds_pll_core_lcd : T8 ,"&
+    "vdds_osc          : U10 ,"&
+    "vdds_ddr          : (G5, H5, H6, K4, K5, M5, M6, N5 ),"&
+    "vdds              : (D12, F16, M16, T14, T6 ),"&
+    "vdda3p3v_usb0     : R18 ,"&
+    "vdda1p8v_usb0     : R17 ,"&
+    "vdda_adc          : D7 ,"&
+    "vdd_core          : (F11, F9, G11, G9, H12, H13, H7, H8, J12, J13, J7, J8, K15, K16, L12, L13, L7, L8, M12, M13, M7, M8, N11, N9, P11, P9 ),"&
+    "ENZ_KALDO_1P8V    : A7 ,"&
+    "ddr_vref          : H4 ,"&
+    "cap_vdd_sram_mpu  : D13 ,"&
+    "cap_vdd_sram_core : B10 ,"&
+    "cap_vdd_rtc       : D6 ,"&
+    "cap_vbb_mpu       : C13 ,"&
+    "usb0_vbus         : T19 " ;
+
+      attribute PORT_GROUPING of F781962A : entity is
+"Differential_Voltage  ( (ddr_dqs0,ddr_dqsn0)," &
+                        "(ddr_dqs1,ddr_dqsn1)," &
+                        "(ddr_ck,DDR_CKn))";
+
+    -- *********************************************************
+        attribute TAP_SCAN_IN    of TDI     : signal is true;
+        attribute TAP_SCAN_MODE  of TMS     : signal is true;
+        attribute TAP_SCAN_OUT   of TDO     : signal is true;
+        attribute TAP_SCAN_RESET of TRSTn   : signal is true;
+        attribute TAP_SCAN_CLOCK of TCK     : signal is (20.00e6, BOTH);
+    
+        attribute COMPLIANCE_PATTERNS of F781962A: entity is 
+        "( PWRONRSTn )  (1)";
+    
+        attribute INSTRUCTION_LENGTH of F781962A: entity is 6;
+        attribute INSTRUCTION_OPCODE of F781962A: entity is
+                  "EXTEST    (011000), " &
+                  "IDCODE    (000100), " &
+                  "BYPASS    (111111), " &
+                  "SAMPLE    (011011), " &
+                  "PRELOAD   (011100), " &
+                  "PRIVATE   (000000,  " &
+                  "           000001,  " &
+                  "           000010,  " &
+                  "           000011,  " &
+                  "           000101,  " &
+                  "           000110,  " &
+                  "           000111,  " &
+                  "           001000,  " &
+                  "           001001,  " &
+                  "           001010,  " &
+                  "           001011,  " &
+                  "           001100,  " &
+                  "           001101,  " &
+                  "           001110,  " &
+                  "           001111,  " &
+                  "           010000,  " &
+                  "           010001,  " &
+                  "           010010,  " &
+                  "           010011,  " &
+                  "           010100,  " &
+                  "           010101,  " &
+                  "           010110,  " &
+                  "           010111,  " &
+                  "           011001,  " &
+                  "           011010,  " &
+                  "           011101,  " &
+                  "           011110,  " &
+                  "           011111,  " &
+                  "           100000,  " &
+                  "           100001,  " &
+                  "           100010,  " &
+                  "           100011,  " &
+                  "           100100,  " &
+                  "           100101,  " &
+                  "           100110,  " &
+                  "           100111,  " &
+                  "           101000,  " &
+                  "           101001,  " &
+                  "           101010,  " &
+                  "           101011,  " &
+                  "           101100,  " &
+                  "           101101,  " &
+                  "           101110,  " &
+                  "           101111,  " &
+                  "           110000,  " &
+                  "           110001,  " &
+                  "           110010,  " &
+                  "           110011,  " &
+                  "           110100,  " &
+                  "           110101,  " &
+                  "           110110,  " &
+                  "           110111,  " &
+                  "           111000,  " &
+                  "           111001,  " &
+                  "           111010,  " &
+                  "           111011,  " &
+                  "           111100,  " &
+                  "           111101,  " &
+                  "           111110)  " ;
+
+
+
+
+    attribute INSTRUCTION_CAPTURE of F781962A: entity is "XXXX01";
+    attribute INSTRUCTION_PRIVATE of F781962A: entity is "PRIVATE";
+    attribute IDCODE_REGISTER of F781962A: entity is
+              "0001" &                 -- Version number
+              "1011100101000100" &     -- Part number -- subArctic pin package ID
+              "00000010111" &          -- Manufacturer ID  -- Texas Instruments
+              "1";                     -- Required by IEEE Std. 
+    attribute REGISTER_ACCESS of F781962A: entity is
+              "BOUNDARY (EXTEST, SAMPLE, PRELOAD)," &
+              "BYPASS   (BYPASS)  " ;
+    attribute BOUNDARY_LENGTH   of F781962A: entity is 470;
+    attribute BOUNDARY_REGISTER of F781962A: entity is
+--- num  cell                      port     function  safe ccell disval rslt 
+ "0   (  bc_1,                 ddr_dqs1,  output3, X,   1, 1,     Z)," &
+ "1   (  bc_1,                        *,  control, 1               )," &
+ "2   (  bc_1,                 ddr_dqs1,    input, X               )," &
+ "3   (  bc_1,                 ddr_dqs0,  output3, X,   4, 1,     Z)," &
+ "4   (  bc_1,                        *,  control, 1               )," &
+ "5   (  bc_1,                 ddr_dqs0,    input, X               )," &
+ "6   (  bc_1,                 ddr_dqm1,  output3, X,   7, 1,     Z)," &
+ "7   (  bc_1,                        *,  control, 1               )," &
+ "8   (  bc_1,                 ddr_dqm1,    input, X               )," &
+ "9   (  bc_1,                 ddr_dqm0,  output3, X,  10, 1,     Z)," &
+ "10  (  bc_1,                        *,  control, 1               )," &
+ "11  (  bc_1,                 ddr_dqm0,    input, X               )," &
+ "12  (  bc_1,                  ddr_d15,  output3, X,  13, 1,     Z)," &
+ "13  (  bc_1,                        *,  control, 1               )," &
+ "14  (  bc_1,                  ddr_d15,    input, X               )," &
+ "15  (  bc_1,                  ddr_d14,  output3, X,  16, 1,     Z)," &
+ "16  (  bc_1,                        *,  control, 1               )," &
+ "17  (  bc_1,                  ddr_d14,    input, X               )," &
+ "18  (  bc_1,                  ddr_d13,  output3, X,  19, 1,     Z)," &
+ "19  (  bc_1,                        *,  control, 1               )," &
+ "20  (  bc_1,                  ddr_d13,    input, X               )," &
+ "21  (  bc_1,                  ddr_d12,  output3, X,  22, 1,     Z)," &
+ "22  (  bc_1,                        *,  control, 1               )," &
+ "23  (  bc_1,                  ddr_d12,    input, X               )," &
+ "24  (  bc_1,                  ddr_d11,  output3, X,  25, 1,     Z)," &
+ "25  (  bc_1,                        *,  control, 1               )," &
+ "26  (  bc_1,                  ddr_d11,    input, X               )," &
+ "27  (  bc_1,                  ddr_d10,  output3, X,  28, 1,     Z)," &
+ "28  (  bc_1,                        *,  control, 1               )," &
+ "29  (  bc_1,                  ddr_d10,    input, X               )," &
+ "30  (  bc_1,                   ddr_d9,  output3, X,  31, 1,     Z)," &
+ "31  (  bc_1,                        *,  control, 1               )," &
+ "32  (  bc_1,                   ddr_d9,    input, X               )," &
+ "33  (  bc_1,                   ddr_d8,  output3, X,  34, 1,     Z)," &
+ "34  (  bc_1,                        *,  control, 1               )," &
+ "35  (  bc_1,                   ddr_d8,    input, X               )," &
+ "36  (  bc_1,                   ddr_d7,  output3, X,  37, 1,     Z)," &
+ "37  (  bc_1,                        *,  control, 1               )," &
+ "38  (  bc_1,                   ddr_d7,    input, X               )," &
+ "39  (  bc_1,                   ddr_d6,  output3, X,  40, 1,     Z)," &
+ "40  (  bc_1,                        *,  control, 1               )," &
+ "41  (  bc_1,                   ddr_d6,    input, X               )," &
+ "42  (  bc_1,                   ddr_d5,  output3, X,  43, 1,     Z)," &
+ "43  (  bc_1,                        *,  control, 1               )," &
+ "44  (  bc_1,                   ddr_d5,    input, X               )," &
+ "45  (  bc_1,                   ddr_d4,  output3, X,  46, 1,     Z)," &
+ "46  (  bc_1,                        *,  control, 1               )," &
+ "47  (  bc_1,                   ddr_d4,    input, X               )," &
+ "48  (  bc_1,                   ddr_d3,  output3, X,  49, 1,     Z)," &
+ "49  (  bc_1,                        *,  control, 1               )," &
+ "50  (  bc_1,                   ddr_d3,    input, X               )," &
+ "51  (  bc_1,                   ddr_d2,  output3, X,  52, 1,     Z)," &
+ "52  (  bc_1,                        *,  control, 1               )," &
+ "53  (  bc_1,                   ddr_d2,    input, X               )," &
+ "54  (  bc_1,                   ddr_d1,  output3, X,  55, 1,     Z)," &
+ "55  (  bc_1,                        *,  control, 1               )," &
+ "56  (  bc_1,                   ddr_d1,    input, X               )," &
+ "57  (  bc_1,                   ddr_d0,  output3, X,  58, 1,     Z)," &
+ "58  (  bc_1,                        *,  control, 1               )," &
+ "59  (  bc_1,                   ddr_d0,    input, X               )," &
+ "60  (  bc_1,                  ddr_odt,  output3, X,  95, 1,     Z)," &
+ "61  (  bc_1,                  ddr_odt,    input, X               )," &
+ "62  (  bc_1,               ddr_resetn,  output3, X,  95, 1,     Z)," &
+ "63  (  bc_1,               ddr_resetn,    input, X               )," &
+ "64  (  bc_1,                  ddr_a15,  output3, X,  73, 1,     Z)," &
+ "65  (  bc_1,                  ddr_a15,    input, X               )," &
+ "66  (  bc_1,                  ddr_a14,  output3, X,  95, 1,     Z)," &
+ "67  (  bc_1,                  ddr_a14,    input, X               )," &
+ "68  (  bc_1,                  ddr_a13,  output3, X,  95, 1,     Z)," &
+ "69  (  bc_1,                  ddr_a13,    input, X               )," &
+ "70  (  bc_1,                  ddr_a12,  output3, X,  73, 1,     Z)," &
+ "71  (  bc_1,                  ddr_a12,    input, X               )," &
+ "72  (  bc_1,                  ddr_a11,  output3, X,  73, 1,     Z)," &
+ "73  (  bc_1,                        *,  control, 1               )," &
+ "74  (  bc_1,                  ddr_a11,    input, X               )," &
+ "75  (  bc_1,                  ddr_a10,  output3, X,  73, 1,     Z)," &
+ "76  (  bc_1,                  ddr_a10,    input, X               )," &
+ "77  (  bc_1,                   ddr_a9,  output3, X,  80, 1,     Z)," &
+ "78  (  bc_1,                   ddr_a9,    input, X               )," &
+ "79  (  bc_1,                   ddr_a8,  output3, X,  80, 1,     Z)," &
+ "80  (  bc_1,                        *,  control, 1               )," &
+ "81  (  bc_1,                   ddr_a8,    input, X               )," &
+ "82  (  bc_1,                   ddr_a7,  output3, X,  73, 1,     Z)," &
+ "83  (  bc_1,                   ddr_a7,    input, X               )," &
+ "84  (  bc_1,                   ddr_a6,  output3, X,  80, 1,     Z)," &
+ "85  (  bc_1,                   ddr_a6,    input, X               )," &
+ "86  (  bc_1,                   ddr_a5,  output3, X,  80, 1,     Z)," &
+ "87  (  bc_1,                   ddr_a5,    input, X               )," &
+ "88  (  bc_1,                   ddr_a4,  output3, X,  80, 1,     Z)," &
+ "89  (  bc_1,                   ddr_a4,    input, X               )," &
+ "90  (  bc_1,                   ddr_a3,  output3, X,  80, 1,     Z)," &
+ "91  (  bc_1,                   ddr_a3,    input, X               )," &
+ "92  (  bc_1,                   ddr_a2,  output3, X,  73, 1,     Z)," &
+ "93  (  bc_1,                   ddr_a2,    input, X               )," &
+ "94  (  bc_1,                   ddr_a1,  output3, X,  95, 1,     Z)," &
+ "95  (  bc_1,                        *,  control, 1               )," &
+ "96  (  bc_1,                   ddr_a1,    input, X               )," &
+ "97  (  bc_1,                   ddr_a0,  output3, X,  73, 1,     Z)," &
+ "98  (  bc_1,                   ddr_a0,    input, X               )," &
+ "99  (  bc_1,                  ddr_ba2,  output3, X,  80, 1,     Z)," &
+ "100 (  bc_1,                  ddr_ba2,    input, X               )," &
+ "101 (  bc_1,                  ddr_ba1,  output3, X,  73, 1,     Z)," &
+ "102 (  bc_1,                  ddr_ba1,    input, X               )," &
+ "103 (  bc_1,                  ddr_ba0,  output3, X,  80, 1,     Z)," &
+ "104 (  bc_1,                  ddr_ba0,    input, X               )," &
+ "105 (  bc_1,                  ddr_wen,  output3, X,  80, 1,     Z)," &
+ "106 (  bc_1,                  ddr_wen,    input, X               )," &
+ "107 (  bc_1,                 ddr_rasn,  output3, X,  73, 1,     Z)," &
+ "108 (  bc_1,                 ddr_rasn,    input, X               )," &
+ "109 (  bc_1,                 ddr_casn,  output3, X,  73, 1,     Z)," &
+ "110 (  bc_1,                 ddr_casn,    input, X               )," &
+ "111 (  bc_1,                  *, internal,  X)," & 
+ "112 (  bc_1,                  *, internal,  X                  )," & 
+ "113 (  bc_1,                   ddr_ck,  output3, X,  80, 1,     Z)," &
+ "114 (  bc_1,                   ddr_ck,    input, X               )," &
+ "115 (  bc_1,                  ddr_cke,  output3, X,  73, 1,     Z)," &
+ "116 (  bc_1,                  ddr_cke,    input, X               )," &
+ "117 (  bc_1,                 ddr_csn0,  output3, X,  95, 1,     Z)," &
+ "118 (  bc_1,                 ddr_csn0,    input, X               )," &
+ "119 (  bc_1,                        *, internal, X               )," &
+ "120 (  bc_1,                        *, internal, X               )," &
+ "121 (  bc_1,                        *, internal, X               )," &
+ "122 (  bc_1,             USB0_DRVVBUS,  output3, X, 123, 1, pull0)," &
+ "123 (  bc_1,                        *,  control, 1               )," &
+ "124 (  bc_1,             USB0_DRVVBUS,    input, X               )," &
+ "125 (  bc_1,               EXT_WAKEUP,    input, X               )," &
+ "126 (  bc_1,                 RTC_PWRONRSTn,    input, X               )," &
+ "127 (  bc_1,                     EMU1,  output3, X, 128, 1, pull1)," &
+ "128 (  bc_1,                        *,  control, 1               )," &
+ "129 (  bc_1,                     EMU1,    input, X               )," &
+ "130 (  bc_1,                     EMU0,  output3, X, 131, 1, pull1)," &
+ "131 (  bc_1,                        *,  control, 1               )," &
+ "132 (  bc_1,                     EMU0,    input, X               )," &
+ "133 (  bc_1,                     EXTINTn,  output3, X, 134, 1, pull1)," &
+ "134 (  bc_1,                        *,  control, 1               )," &
+ "135 (  bc_1,                     EXTINTn,    input, X               )," &
+ "136 (  bc_1,                        *, internal, 1               )," & -- PORZ
+ "137 (  bc_1,             WARMRSTn,  output3, X, 138, 1,     Z)," &
+ "138 (  bc_1,                        *,  control, 1               )," &
+ "139 (  bc_1,             WARMRSTn,    input, X               )," &
+ "140 (  bc_1,         xdma_event_intr1,  output3, X, 141, 1, pull0)," &
+ "141 (  bc_1,                        *,  control, 1               )," &
+ "142 (  bc_1,         xdma_event_intr1,    input, X               )," &
+ "143 (  bc_1,         xdma_event_intr0,  output3, X, 144, 1, pull0)," &
+ "144 (  bc_1,                        *,  control, 1               )," &
+ "145 (  bc_1,         xdma_event_intr0,    input, X               )," &
+ "146 (  bc_1,                        *, internal, X               )," &
+ "147 (  bc_1,                        *, internal, X               )," &
+ "148 (  bc_1,                        *, internal, X               )," &
+ "149 (  bc_1,                        *, internal, X               )," &
+ "150 (  bc_1,                        *, internal, X               )," &
+ "151 (  bc_1,                        *, internal, X               )," &
+ "152 (  bc_1,                        *, internal, X               )," &
+ "153 (  bc_1,                        *, internal, X               )," &
+ "154 (  bc_1,                        *, internal, X               )," &
+ "155 (  bc_1,                        *, internal, X               )," &
+ "156 (  bc_1,                        *, internal, X               )," &
+ "157 (  bc_1,                        *, internal, X               )," &
+ "158 (  bc_1,                        *, internal, X               )," &
+ "159 (  bc_1,                        *, internal, X               )," &
+ "160 (  bc_1,                        *, internal, X               )," &
+ "161 (  bc_1,                        *, internal, X               )," &
+ "162 (  bc_1,                        *, internal, X               )," &
+ "163 (  bc_1,                        *, internal, X               )," &
+ "164 (  bc_1,                        *, internal, X               )," &
+ "165 (  bc_1,                        *, internal, X               )," &
+ "166 (  bc_1,                        *, internal, X               )," &
+ "167 (  bc_1,                        *, internal, X               )," &
+ "168 (  bc_1,                        *, internal, X               )," &
+ "169 (  bc_1,                        *, internal, X               )," &
+ "170 (  bc_1,                 I2C0_SCL,  output3, X, 171, 1, pull1)," &
+ "171 (  bc_1,                        *,  control, 1               )," &
+ "172 (  bc_1,                 I2C0_SCL,    input, X               )," &
+ "173 (  bc_1,                 I2C0_SDA,  output3, X, 174, 1, pull1)," &
+ "174 (  bc_1,                        *,  control, 1               )," &
+ "175 (  bc_1,                 I2C0_SDA,    input, X               )," &
+ "176 (  bc_1,                uart1_txd,  output3, X, 177, 1, pull1)," &
+ "177 (  bc_1,                        *,  control, 1               )," &
+ "178 (  bc_1,                uart1_txd,    input, X               )," &
+ "179 (  bc_1,                uart1_rxd,  output3, X, 180, 1, pull1)," &
+ "180 (  bc_1,                        *,  control, 1               )," &
+ "181 (  bc_1,                uart1_rxd,    input, X               )," &
+ "182 (  bc_1,               uart1_rtsn,  output3, X, 183, 1, pull1)," &
+ "183 (  bc_1,                        *,  control, 1               )," &
+ "184 (  bc_1,               uart1_rtsn,    input, X               )," &
+ "185 (  bc_1,               uart1_ctsn,  output3, X, 186, 1, pull1)," &
+ "186 (  bc_1,                        *,  control, 1               )," &
+ "187 (  bc_1,               uart1_ctsn,    input, X               )," &
+ "188 (  bc_1,                uart0_txd,  output3, X, 189, 1, pull1)," &
+ "189 (  bc_1,                        *,  control, 1               )," &
+ "190 (  bc_1,                uart0_txd,    input, X               )," &
+ "191 (  bc_1,                uart0_rxd,  output3, X, 192, 1, pull1)," &
+ "192 (  bc_1,                        *,  control, 1               )," &
+ "193 (  bc_1,                uart0_rxd,    input, X               )," &
+ "194 (  bc_1,               uart0_rtsn,  output3, X, 195, 1, pull1)," &
+ "195 (  bc_1,                        *,  control, 1               )," &
+ "196 (  bc_1,               uart0_rtsn,    input, X               )," &
+ "197 (  bc_1,               uart0_ctsn,  output3, X, 198, 1, pull1)," &
+ "198 (  bc_1,                        *,  control, 1               )," &
+ "199 (  bc_1,               uart0_ctsn,    input, X               )," &
+ "200 (  bc_1,        eCAP0_in_PWM0_out,  output3, X, 201, 1, pull0)," &
+ "201 (  bc_1,                        *,  control, 1               )," &
+ "202 (  bc_1,        eCAP0_in_PWM0_out,    input, X               )," &
+ "203 (  bc_1,                 spi0_cs1,  output3, X, 204, 1, pull1)," &
+ "204 (  bc_1,                        *,  control, 1               )," &
+ "205 (  bc_1,                 spi0_cs1,    input, X               )," &
+ "206 (  bc_1,                 spi0_cs0,  output3, X, 207, 1, pull1)," &
+ "207 (  bc_1,                        *,  control, 1               )," &
+ "208 (  bc_1,                 spi0_cs0,    input, X               )," &
+ "209 (  bc_1,                  spi0_d1,  output3, X, 210, 1, pull1)," &
+ "210 (  bc_1,                        *,  control, 1               )," &
+ "211 (  bc_1,                  spi0_d1,    input, X               )," &
+ "212 (  bc_1,                  spi0_d0,  output3, X, 213, 1, pull1)," &
+ "213 (  bc_1,                        *,  control, 1               )," &
+ "214 (  bc_1,                  spi0_d0,    input, X               )," &
+ "215 (  bc_1,                spi0_sclk,  output3, X, 216, 1, pull1)," &
+ "216 (  bc_1,                        *,  control, 1               )," &
+ "217 (  bc_1,                spi0_sclk,    input, X               )," &
+ "218 (  bc_1,                 mdc,  output3, X, 219, 1, pull1)," &
+ "219 (  bc_1,                        *,  control, 1               )," &
+ "220 (  bc_1,                 mdc,    input, X               )," &
+ "221 (  bc_1,                mdio,  output3, X, 222, 1, pull1)," &
+ "222 (  bc_1,                        *,  control, 1               )," &
+ "223 (  bc_1,                mdio,    input, X               )," &
+ "224 (  bc_1,             rmii1_ref_clk,  output3, X, 225, 1, pull0)," &
+ "225 (  bc_1,                        *,  control, 1               )," &
+ "226 (  bc_1,             rmii1_ref_clk,    input, X               )," &
+ "227 (  bc_1,                mii1_rxd0,  output3, X, 228, 1, pull0)," &
+ "228 (  bc_1,                        *,  control, 1               )," &
+ "229 (  bc_1,                mii1_rxd0,    input, X               )," &
+ "230 (  bc_1,                mii1_rxd1,  output3, X, 231, 1, pull0)," &
+ "231 (  bc_1,                        *,  control, 1               )," &
+ "232 (  bc_1,                mii1_rxd1,    input, X               )," &
+ "233 (  bc_1,                mii1_rxd2,  output3, X, 234, 1, pull0)," &
+ "234 (  bc_1,                        *,  control, 1               )," &
+ "235 (  bc_1,                mii1_rxd2,    input, X               )," &
+ "236 (  bc_1,                mii1_rxd3,  output3, X, 237, 1, pull0)," &
+ "237 (  bc_1,                        *,  control, 1               )," &
+ "238 (  bc_1,                mii1_rxd3,    input, X               )," &
+ "239 (  bc_1,               mii1_rx_clk,  output3, X, 240, 1, pull0)," &
+ "240 (  bc_1,                        *,  control, 1               )," &
+ "241 (  bc_1,               mii1_rx_clk,    input, X               )," &
+ "242 (  bc_1,               mii1_tx_clk,  output3, X, 243, 1, pull0)," &
+ "243 (  bc_1,                        *,  control, 1               )," &
+ "244 (  bc_1,               mii1_tx_clk,    input, X               )," &
+ "245 (  bc_1,                mii1_txd0,  output3, X, 246, 1, pull0)," &
+ "246 (  bc_1,                        *,  control, 1               )," &
+ "247 (  bc_1,                mii1_txd0,    input, X               )," &
+ "248 (  bc_1,                mii1_txd1,  output3, X, 249, 1, pull0)," &
+ "249 (  bc_1,                        *,  control, 1               )," &
+ "250 (  bc_1,                mii1_txd1,    input, X               )," &
+ "251 (  bc_1,                mii1_txd2,  output3, X, 252, 1, pull0)," &
+ "252 (  bc_1,                        *,  control, 1               )," &
+ "253 (  bc_1,                mii1_txd2,    input, X               )," &
+ "254 (  bc_1,                mii1_txd3,  output3, X, 255, 1, pull0)," &
+ "255 (  bc_1,                        *,  control, 1               )," &
+ "256 (  bc_1,                mii1_txd3,    input, X               )," &
+ "257 (  bc_1,                mii1_rx_dv,  output3, X, 258, 1, pull0)," &
+ "258 (  bc_1,                        *,  control, 1               )," &
+ "259 (  bc_1,                mii1_rx_dv,    input, X               )," &
+ "260 (  bc_1,                mii1_tx_en,  output3, X, 261, 1, pull0)," &
+ "261 (  bc_1,                        *,  control, 1               )," &
+ "262 (  bc_1,                mii1_tx_en,    input, X               )," &
+ "263 (  bc_1,               mii1_rx_er,  output3, X, 264, 1, pull0)," &
+ "264 (  bc_1,                        *,  control, 1               )," &
+ "265 (  bc_1,               mii1_rx_er,    input, X               )," &
+ "266 (  bc_1,                 mii1_crs,  output3, X, 267, 1, pull0)," &
+ "267 (  bc_1,                        *,  control, 1               )," &
+ "268 (  bc_1,                 mii1_crs,    input, X               )," &
+ "269 (  bc_1,                 mii1_col,  output3, X, 270, 1, pull0)," &
+ "270 (  bc_1,                        *,  control, 1               )," &
+ "271 (  bc_1,                 mii1_col,    input, X               )," &
+ "272 (  bc_1,                 mmc0_cmd,  output3, X, 273, 1, pull1)," &
+ "273 (  bc_1,                        *,  control, 1               )," &
+ "274 (  bc_1,                 mmc0_cmd,    input, X               )," &
+ "275 (  bc_1,                 mmc0_clk,  output3, X, 276, 1, pull1)," &
+ "276 (  bc_1,                        *,  control, 1               )," &
+ "277 (  bc_1,                 mmc0_clk,    input, X               )," &
+ "278 (  bc_1,                mmc0_dat0,  output3, X, 279, 1, pull1)," &
+ "279 (  bc_1,                        *,  control, 1               )," &
+ "280 (  bc_1,                mmc0_dat0,    input, X               )," &
+ "281 (  bc_1,                mmc0_dat1,  output3, X, 282, 1, pull1)," &
+ "282 (  bc_1,                        *,  control, 1               )," &
+ "283 (  bc_1,                mmc0_dat1,    input, X               )," &
+ "284 (  bc_1,                mmc0_dat2,  output3, X, 285, 1, pull1)," &
+ "285 (  bc_1,                        *,  control, 1               )," &
+ "286 (  bc_1,                mmc0_dat2,    input, X               )," &
+ "287 (  bc_1,                mmc0_dat3,  output3, X, 288, 1, pull1)," &
+ "288 (  bc_1,                        *,  control, 1               )," &
+ "289 (  bc_1,                mmc0_dat3,    input, X               )," &
+ "290 (  bc_1,           lcd_ac_bias_en,  output3, X, 291, 1, pull0)," &
+ "291 (  bc_1,                        *,  control, 1               )," &
+ "292 (  bc_1,           lcd_ac_bias_en,    input, X               )," &
+ "293 (  bc_1,                 lcd_pclk,  output3, X, 294, 1, pull0)," &
+ "294 (  bc_1,                        *,  control, 1               )," &
+ "295 (  bc_1,                 lcd_pclk,    input, X               )," &
+ "296 (  bc_1,                lcd_hsync,  output3, X, 297, 1, pull0)," &
+ "297 (  bc_1,                        *,  control, 1               )," &
+ "298 (  bc_1,                lcd_hsync,    input, X               )," &
+ "299 (  bc_1,                lcd_vsync,  output3, X, 300, 1, pull0)," &
+ "300 (  bc_1,                        *,  control, 1               )," &
+ "301 (  bc_1,                lcd_vsync,    input, X               )," &
+ "302 (  bc_1,               lcd_data15,  output3, X, 303, 1,     Z)," &
+ "303 (  bc_1,                        *,  control, 1               )," &
+ "304 (  bc_1,               lcd_data15,    input, X               )," &
+ "305 (  bc_1,               lcd_data14,  output3, X, 306, 1,     Z)," &
+ "306 (  bc_1,                        *,  control, 1               )," &
+ "307 (  bc_1,               lcd_data14,    input, X               )," &
+ "308 (  bc_1,               lcd_data13,  output3, X, 309, 1,     Z)," &
+ "309 (  bc_1,                        *,  control, 1               )," &
+ "310 (  bc_1,               lcd_data13,    input, X               )," &
+ "311 (  bc_1,               lcd_data12,  output3, X, 312, 1,     Z)," &
+ "312 (  bc_1,                        *,  control, 1               )," &
+ "313 (  bc_1,               lcd_data12,    input, X               )," &
+ "314 (  bc_1,               lcd_data11,  output3, X, 315, 1,     Z)," &
+ "315 (  bc_1,                        *,  control, 1               )," &
+ "316 (  bc_1,               lcd_data11,    input, X               )," &
+ "317 (  bc_1,               lcd_data10,  output3, X, 318, 1,     Z)," &
+ "318 (  bc_1,                        *,  control, 1               )," &
+ "319 (  bc_1,               lcd_data10,    input, X               )," &
+ "320 (  bc_1,                lcd_data9,  output3, X, 321, 1,     Z)," &
+ "321 (  bc_1,                        *,  control, 1               )," &
+ "322 (  bc_1,                lcd_data9,    input, X               )," &
+ "323 (  bc_1,                lcd_data8,  output3, X, 324, 1,     Z)," &
+ "324 (  bc_1,                        *,  control, 1               )," &
+ "325 (  bc_1,                lcd_data8,    input, X               )," &
+ "326 (  bc_1,                lcd_data7,  output3, X, 327, 1,     Z)," &
+ "327 (  bc_1,                        *,  control, 1               )," &
+ "328 (  bc_1,                lcd_data7,    input, X               )," &
+ "329 (  bc_1,                lcd_data6,  output3, X, 330, 1,     Z)," &
+ "330 (  bc_1,                        *,  control, 1               )," &
+ "331 (  bc_1,                lcd_data6,    input, X               )," &
+ "332 (  bc_1,                lcd_data5,  output3, X, 333, 1,     Z)," &
+ "333 (  bc_1,                        *,  control, 1               )," &
+ "334 (  bc_1,                lcd_data5,    input, X               )," &
+ "335 (  bc_1,                lcd_data4,  output3, X, 336, 1,     Z)," &
+ "336 (  bc_1,                        *,  control, 1               )," &
+ "337 (  bc_1,                lcd_data4,    input, X               )," &
+ "338 (  bc_1,                lcd_data3,  output3, X, 339, 1,     Z)," &
+ "339 (  bc_1,                        *,  control, 1               )," &
+ "340 (  bc_1,                lcd_data3,    input, X               )," &
+ "341 (  bc_1,                lcd_data2,  output3, X, 342, 1,     Z)," &
+ "342 (  bc_1,                        *,  control, 1               )," &
+ "343 (  bc_1,                lcd_data2,    input, X               )," &
+ "344 (  bc_1,                lcd_data1,  output3, X, 345, 1,     Z)," &
+ "345 (  bc_1,                        *,  control, 1               )," &
+ "346 (  bc_1,                lcd_data1,    input, X               )," &
+ "347 (  bc_1,                lcd_data0,  output3, X, 348, 1,     Z)," &
+ "348 (  bc_1,                        *,  control, 1               )," &
+ "349 (  bc_1,                lcd_data0,    input, X               )," &
+ "350 (  bc_1,            gpmc_ben0_cle,  output3, X, 351, 1, pull1)," &
+ "351 (  bc_1,                        *,  control, 1               )," &
+ "352 (  bc_1,            gpmc_ben0_cle,    input, X               )," &
+ "353 (  bc_1,                 gpmc_wen,  output3, X, 354, 1, pull1)," &
+ "354 (  bc_1,                        *,  control, 1               )," &
+ "355 (  bc_1,                 gpmc_wen,    input, X               )," &
+ "356 (  bc_1,             gpmc_oen_ren,  output3, X, 357, 1, pull1)," &
+ "357 (  bc_1,                        *,  control, 1               )," &
+ "358 (  bc_1,             gpmc_oen_ren,    input, X               )," &
+ "359 (  bc_1,            gpmc_advn_ale,  output3, X, 360, 1, pull1)," &
+ "360 (  bc_1,                        *,  control, 1               )," &
+ "361 (  bc_1,            gpmc_advn_ale,    input, X               )," &
+ "362 (  bc_1,                 gpmc_clk,  output3, X, 363, 1, pull1)," &
+ "363 (  bc_1,                        *,  control, 1               )," &
+ "364 (  bc_1,                 gpmc_clk,    input, X               )," &
+ "365 (  bc_1,                gpmc_csn3,  output3, X, 366, 1, pull1)," &
+ "366 (  bc_1,                        *,  control, 1               )," &
+ "367 (  bc_1,                gpmc_csn3,    input, X               )," &
+ "368 (  bc_1,                gpmc_csn2,  output3, X, 369, 1, pull1)," &
+ "369 (  bc_1,                        *,  control, 1               )," &
+ "370 (  bc_1,                gpmc_csn2,    input, X               )," &
+ "371 (  bc_1,                gpmc_csn1,  output3, X, 372, 1, pull1)," &
+ "372 (  bc_1,                        *,  control, 1               )," &
+ "373 (  bc_1,                gpmc_csn1,    input, X               )," &
+ "374 (  bc_1,                gpmc_csn0,  output3, X, 375, 1, pull1)," &
+ "375 (  bc_1,                        *,  control, 1               )," &
+ "376 (  bc_1,                gpmc_csn0,    input, X               )," &
+ "377 (  bc_1,                gpmc_ben1,  output3, X, 378, 1, pull1)," &
+ "378 (  bc_1,                        *,  control, 1               )," &
+ "379 (  bc_1,                gpmc_ben1,    input, X               )," &
+ "380 (  bc_1,                 gpmc_wpn,  output3, X, 381, 1, pull1)," &
+ "381 (  bc_1,                        *,  control, 1               )," &
+ "382 (  bc_1,                 gpmc_wpn,    input, X               )," &
+ "383 (  bc_1,               gpmc_wait0,  output3, X, 384, 1, pull1)," &
+ "384 (  bc_1,                        *,  control, 1               )," &
+ "385 (  bc_1,               gpmc_wait0,    input, X               )," &
+ "386 (  bc_1,                        *, internal, X               )," &
+ "387 (  bc_1,                        *, internal, X               )," &
+ "388 (  bc_1,                        *, internal, X               )," &
+ "389 (  bc_1,                        *, internal, X               )," &
+ "390 (  bc_1,                        *, internal, X               )," &
+ "391 (  bc_1,                        *, internal, X               )," &
+ "392 (  bc_1,                        *, internal, X               )," &
+ "393 (  bc_1,                        *, internal, X               )," &
+ "394 (  bc_1,                        *, internal, X               )," &
+ "395 (  bc_1,                        *, internal, X               )," &
+ "396 (  bc_1,                        *, internal, X               )," &
+ "397 (  bc_1,                        *, internal, X               )," &
+ "398 (  bc_1,                        *, internal, X               )," &
+ "399 (  bc_1,                        *, internal, X               )," &
+ "400 (  bc_1,                        *, internal, X               )," &
+ "401 (  bc_1,                        *, internal, X               )," &
+ "402 (  bc_1,                        *, internal, X               )," &
+ "403 (  bc_1,                        *, internal, X               )," &
+ "404 (  bc_1,                        *, internal, X               )," &
+ "405 (  bc_1,                        *, internal, X               )," &
+ "406 (  bc_1,                        *, internal, X               )," &
+ "407 (  bc_1,                        *, internal, X               )," &
+ "408 (  bc_1,                        *, internal, X               )," &
+ "409 (  bc_1,                        *, internal, X               )," &
+ "410 (  bc_1,                        *, internal, X               )," &
+ "411 (  bc_1,                        *, internal, X               )," &
+ "412 (  bc_1,                        *, internal, X               )," &
+ "413 (  bc_1,                        *, internal, X               )," &
+ "414 (  bc_1,                        *, internal, X               )," &
+ "415 (  bc_1,                        *, internal, X               )," &
+ "416 (  bc_1,                        *, internal, X               )," &
+ "417 (  bc_1,                        *, internal, X               )," &
+ "418 (  bc_1,                        *, internal, X               )," &
+ "419 (  bc_1,                        *, internal, X               )," &
+ "420 (  bc_1,                        *, internal, X               )," &
+ "421 (  bc_1,                        *, internal, X               )," &
+ "422 (  bc_1,                gpmc_ad15,  output3, X, 423, 1, pull0)," &
+ "423 (  bc_1,                        *,  control, 1               )," &
+ "424 (  bc_1,                gpmc_ad15,    input, X               )," &
+ "425 (  bc_1,                gpmc_ad14,  output3, X, 426, 1, pull0)," &
+ "426 (  bc_1,                        *,  control, 1               )," &
+ "427 (  bc_1,                gpmc_ad14,    input, X               )," &
+ "428 (  bc_1,                gpmc_ad13,  output3, X, 429, 1, pull0)," &
+ "429 (  bc_1,                        *,  control, 1               )," &
+ "430 (  bc_1,                gpmc_ad13,    input, X               )," &
+ "431 (  bc_1,                gpmc_ad12,  output3, X, 432, 1, pull0)," &
+ "432 (  bc_1,                        *,  control, 1               )," &
+ "433 (  bc_1,                gpmc_ad12,    input, X               )," &
+ "434 (  bc_1,                gpmc_ad11,  output3, X, 435, 1, pull0)," &
+ "435 (  bc_1,                        *,  control, 1               )," &
+ "436 (  bc_1,                gpmc_ad11,    input, X               )," &
+ "437 (  bc_1,                gpmc_ad10,  output3, X, 438, 1, pull0)," &
+ "438 (  bc_1,                        *,  control, 1               )," &
+ "439 (  bc_1,                gpmc_ad10,    input, X               )," &
+ "440 (  bc_1,                 gpmc_ad9,  output3, X, 441, 1, pull0)," &
+ "441 (  bc_1,                        *,  control, 1               )," &
+ "442 (  bc_1,                 gpmc_ad9,    input, X               )," &
+ "443 (  bc_1,                 gpmc_ad8,  output3, X, 444, 1, pull0)," &
+ "444 (  bc_1,                        *,  control, 1               )," &
+ "445 (  bc_1,                 gpmc_ad8,    input, X               )," &
+ "446 (  bc_1,                 gpmc_ad7,  output3, X, 447, 1, pull0)," &
+ "447 (  bc_1,                        *,  control, 1               )," &
+ "448 (  bc_1,                 gpmc_ad7,    input, X               )," &
+ "449 (  bc_1,                 gpmc_ad6,  output3, X, 450, 1, pull0)," &
+ "450 (  bc_1,                        *,  control, 1               )," &
+ "451 (  bc_1,                 gpmc_ad6,    input, X               )," &
+ "452 (  bc_1,                 gpmc_ad5,  output3, X, 453, 1, pull0)," &
+ "453 (  bc_1,                        *,  control, 1               )," &
+ "454 (  bc_1,                 gpmc_ad5,    input, X               )," &
+ "455 (  bc_1,                 gpmc_ad4,  output3, X, 456, 1, pull0)," &
+ "456 (  bc_1,                        *,  control, 1               )," &
+ "457 (  bc_1,                 gpmc_ad4,    input, X               )," &
+ "458 (  bc_1,                 gpmc_ad3,  output3, X, 459, 1, pull0)," &
+ "459 (  bc_1,                        *,  control, 1               )," &
+ "460 (  bc_1,                 gpmc_ad3,    input, X               )," &
+ "461 (  bc_1,                 gpmc_ad2,  output3, X, 462, 1, pull0)," &
+ "462 (  bc_1,                        *,  control, 1               )," &
+ "463 (  bc_1,                 gpmc_ad2,    input, X               )," &
+ "464 (  bc_1,                 gpmc_ad1,  output3, X, 465, 1, pull0)," &
+ "465 (  bc_1,                        *,  control, 1               )," &
+ "466 (  bc_1,                 gpmc_ad1,    input, X               )," &
+ "467 (  bc_1,                 gpmc_ad0,  output3, X, 468, 1, pull0)," &
+ "468 (  bc_1,                        *,  control, 1               )," &
+ "469 (  bc_1,                 gpmc_ad0,    input, X               ) " ;
+
+ attribute DESIGN_WARNING of F781962A: entity is
+              "According to simulation, BSD JTAG TAP may not work correctly unless   " &
+              "device has completed Power on Reset sequence first. If the BSDL tool  " &
+              "does not use trstn pin, please put a 10K Ohm pull up resistor on this pin. " ;
+
+end F781962A;
